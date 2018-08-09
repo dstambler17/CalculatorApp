@@ -1,0 +1,13 @@
+<aura:component >
+	
+    <aura:attribute name="hist" type ="Calc_Hist__c"/>
+    
+    <tr>
+      <th scope="row" data-label="Formula">
+          <div class="slds-truncate" title="Cloudhub">{!v.hist.formula__c}</div>
+      </th>
+      <td data-label="Result">
+          <div class="slds-truncate" title="Cloudhub">  <lightning:formattedNumber value="{!v.hist.result__c}"/> </div>
+      </td>
+    </tr>
+</aura:component>

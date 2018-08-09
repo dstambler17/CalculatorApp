@@ -1,0 +1,22 @@
+.THIS {
+}
+button.THIS {
+    font-size: 24px;
+    width: 100px;
+    height: 100px;
+    margin: 0px;
+    border-radius: 0px;
+    color: black;
+}
+
+#operation.THIS{
+    color: blue;
+}
+
+#clear.THIS{
+    color:red;
+}
+
+#equals.THIS{
+    color:white
+}

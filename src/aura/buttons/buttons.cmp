@@ -1,0 +1,88 @@
+<aura:component controller = "ShowHistory" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+    <!--Import Bootstrap and JQuery --> 
+    <ltng:require styles="{! $Resource.boostrap337 + '/bootstrap-3.3.7-dist/css/bootstrap.min.css'}" 
+      scripts="{!join(',', 
+        $Resource.jquery224 , 
+        $Resource.boostrap337 + '/bootstrap-3.3.7-dist/js/bootstrap.min.js')
+      }" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+   <!--To ensure proper rendering and touch zooming using below meta tag -->
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <!-- Variables for dealing with parenthesis -->
+    <aura:attribute name="charBeforeParen" type="Boolean" default = "true"/>
+    <aura:attribute name="numOpenParen" type="Integer" default="0"/>
+    <!--Variable for the input val-->
+    <aura:attribute name="inputVals" type="String" default = ""/>
+    <aura:attribute name= "Result" type="Integer" default = "0"/>
+    
+    <!-- Deals with insertion into history-->
+    <aura:attribute name="newHist" type="Calc_Hist__c" default="{ 'sobjectType' : 'Calc_Hist__c', 'formula__c': '', 'result__c': 0 }"/>
+    <force:recordData aura:id="forceRecord" recordId="{!v.recordId}" targetFields="{!v.newHist}" fields="formula__c, result__c" mode="EDIT" />
+    
+    <!-- Deals with displaying history -->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="hists" type="Calc_Hist__c[]"/>
+
+    
+    <!-- THE CALCULATOR PORTION-->
+    
+    <lightning:input name="mathInput" class="input-has-text" required="false" value="{!v.inputVals}" />
+    <div class="slds-grid slds-wrap lds-grid_pull-padded-medium slds-grid_align-center">
+    	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "C" onclick ="{!c.clear}"/>
+    	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "()" onclick ="{!c.addButton}"/>
+   	 	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "%" onclick ="{!c.addButton}"/>
+    	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "/" onclick ="{!c.addButton}"/>
+        <br/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "7" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "8" onclick ="{!c.addButton}"/>
+    	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "9" onclick ="{!c.addButton}"/>
+    	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "*" onclick ="{!c.addButton}"/>
+        <br/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "4" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "5" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "6" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "-" onclick ="{!c.addButton}"/>
+        <br/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "1" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "2" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "3" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "+" onclick ="{!c.addButton}"/>
+        <br/>
+    	<lightning:button class="slds-button slds-button_outline-brand sizing" label = "+/-" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "0" onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "." onclick ="{!c.addButton}"/>
+        <lightning:button class="slds-button slds-button_outline-brand sizing" label = "=" onclick ="{!c.computeCalculation}"/>
+        <br/>
+    	
+   </div>
+    
+    
+    <!-- The part that displays history-->
+    <div class="slds-scrollable_y" style="height: 10rem;">
+    <table class="slds-table slds-table_bordered">
+  		<thead>
+            
+    		<tr class="slds-text-title_caps" title = "hists">
+      			<th scope="col">
+        			<div class="slds-truncate slds-size_2-of-3" title="Formula">Formula <lightning:button onclick ="{!c.clearHistory}">Clear History</lightning:button></div>
+      			</th>
+      			<th scope="col">
+        			<div class="slds-truncate slds-size_1-of-3" title="Result">Result</div>
+      			</th>
+    		</tr> 
+  		</thead>
+        <tbody >
+      		
+            <!-- Call the HistoryItem component for all that exist in the restDatas array-->
+            <aura:iteration items="{!v.hists}" var="hist">
+                <c:HistoryItem hist ="{!hist}"/>
+            </aura:iteration>
+            
+ 		</tbody>
+	</table>
+    </div>
+        
+    
+    
+    
+</aura:component>

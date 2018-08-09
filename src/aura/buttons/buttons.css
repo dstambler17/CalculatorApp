@@ -1,0 +1,36 @@
+.THIS .sizing{
+    height: 5.3rem;
+    width: 24.5%;
+    font-size: 1.7rem;
+}
+
+.THIS .resultDisp{
+    font-size: 30px;
+    margin-top: 1%;
+}
+
+.THIS.input-has-text {
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: -70px;
+    font-size: 50px;
+    box-sizing: border-box;
+}
+
+.THIS.slds-input_bare {
+    width: 50%;
+    height: 30%;
+    display: inline;
+}
+
+@media (max-width: 360px) {
+    .THIS .sizing{
+    	height: 10rem;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+    .THIS .color-box{
+    	background-color: #c7dbf9;
+	}
+}
